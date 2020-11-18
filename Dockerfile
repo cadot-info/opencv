@@ -1,5 +1,5 @@
 FROM ubuntu:latest
-MAINTAINER cadot.info "github@cadot.info"
+MAINTAINER cadot.info "docker@cadot.info"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -9,21 +9,20 @@ RUN apt-get update \
   && ln -s /usr/bin/python3 python \
   && pip3 install --upgrade pip
 
-RUN apt-get install unzip wget -y
+RUN apt-get install unzip wget libjpeg-dev libpng-dev \
+ libtiff-dev libavcodec-dev libavformat-dev libswscale-dev libv4l-dev \
+ libxvidcore-dev libx264-dev libgtk-3-dev libatlas-base-dev gfortran cmake python3-pip -y
+RUN pip install numpy
+
 RUN wget https://github.com/opencv/opencv/archive/master.zip
 RUN unzip master.zip
 RUN rm master.zip
 RUN wget https://github.com/opencv/opencv_contrib/archive/master.zip
 RUN unzip master.zip
 RUN rm master.zip
-RUN apt-get install libjpeg-dev libpng-dev libtiff-dev libavcodec-dev libavformat-dev libswscale-dev libv4l-dev \
- libxvidcore-dev libx264-dev libgtk-3-dev libatlas-base-dev gfortran -y
 RUN wget https://bootstrap.pypa.io/get-pip.py
-RUN python3 get-pip.py
-RUN pip install virtualenv virtualenvwrapper
-RUN rm -rf ~/get-pip.py ~/.cache/pip
-RUN pip install numpy
-RUN apt install cmake -y
+
+
 WORKDIR "/opencv-master"
 RUN mkdir build
 WORKDIR "/opencv-master/build"
