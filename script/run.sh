@@ -15,4 +15,5 @@ echo "complete" > /var/log/container_status
 mkdir /var/log/supervisor /var/log/apache2
 
 echo 'alias ls="ls --color"'>>/etc/bash.bashrc
-exec /usr/bin/supervisord
+#exec /usr/bin/supervisord
+CMD [ "python", "./server.py" ]
